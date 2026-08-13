@@ -4,7 +4,6 @@
 
 int main() {
     SudokuBoard board;
-
     // Load a simple predefined puzzle state for testing
     // (A real puzzle would have more numbers, but this is a quick test)
     board.setCell(0, 0, 5);

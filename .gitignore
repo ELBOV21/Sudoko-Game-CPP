@@ -1,8 +1,6 @@
-# Build directories
-build/
-bin/
-*.o
-*.out
+# Ignore compiled objects and executables
+obj/*.o
+bin/*.exe
 
 # OS generated files
 .DS_Store
