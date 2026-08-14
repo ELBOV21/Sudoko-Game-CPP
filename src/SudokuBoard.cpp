@@ -1,6 +1,7 @@
 #include "SudokuBoard.hpp"
 #include <iostream>
-
+#include <fstream>
+#include <string>
 SudokuBoard::SudokuBoard() : board(9, std::vector<int>(9, 0)) {}
 
 void SudokuBoard::printBoard() const {
@@ -52,4 +53,39 @@ void SudokuBoard::setCell(int row, int col, int value) {
 
 int SudokuBoard::getCell(int row, int col) const {
     return board[row][col];
+}
+
+// Reads a 9x9 grid of integers from a text file
+bool SudokuBoard::loadFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        return false; // File could not be opened
+    }
+
+    for (int r = 0; r < 9; ++r) {
+        for (int c = 0; c < 9; ++c) {
+            file >> board[r][c];
+        }
+    }
+    
+    file.close();
+    return true;
+}
+
+// Writes the current 9x9 grid to a text file
+bool SudokuBoard::saveToFile(const std::string& filename) const {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        return false; // File could not be created/opened
+    }
+
+    for (int r = 0; r < 9; ++r) {
+        for (int c = 0; c < 9; ++c) {
+            file << board[r][c] << " ";
+        }
+        file << "\n";
+    }
+
+    file.close();
+    return true;
 }
