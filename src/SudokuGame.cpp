@@ -1,5 +1,6 @@
 #include "SudokuGame.hpp"
 #include "SudokuSolver.hpp"
+#include "SudokuGenerator.hpp"
 #include <iostream>
 #include <limits>
 #include <string>
@@ -28,7 +29,8 @@ void SudokuGame::displayMenu() const {
     std::cout << "2) Solve automatically\n";
     std::cout << "3) Load puzzle from file\n";
     std::cout << "4) Save current puzzle to file\n";
-    std::cout << "5) Exit\n";
+    std::cout << "5) Generate new puzzle\n";
+    std::cout << "6) Exit\n";
     std::cout << "Choice: ";
 }
 
@@ -42,7 +44,7 @@ void SudokuGame::handleInput() {
         std::cout << "Invalid input. Please enter a number.\n";
         return;
     }
-
+    SudokuGenerator generator; // Create an instance of SudokuGenerator
     std::string filename; // Variable to hold user input for file operations
 
     switch (choice) {
@@ -71,11 +73,15 @@ void SudokuGame::handleInput() {
             }
             break;
         case 5:
+            generator.generate(board, 40); // Generate a new puzzle with 40 clues
+            std::cout << "New puzzle generated!\n";
+            break;
+        case 6:
             isRunning = false;
             std::cout << "Exiting game...\n";
             break;
         default:
-            std::cout << "Invalid choice. Please select 1-5.\n";
+            std::cout << "Invalid choice. Please select 1-6.\n";
             break;
     }
 }

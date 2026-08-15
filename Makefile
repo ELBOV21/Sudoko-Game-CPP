@@ -1,27 +1,33 @@
-# Force Make to use PowerShell instead of the legacy cmd.exe
-SHELL := powershell.exe
-
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude
 TARGET = bin/SudokuGame.exe
 
-# List all source files in the src folder
-SOURCES = src/main.cpp src/SudokuBoard.cpp src/SudokuSolver.cpp src/SudokuGame.cpp
-
-# Automatically map src/*.cpp to obj/*.o
-OBJECTS = $(SOURCES:src/%.cpp=obj/%.o)
+# List all object files
+OBJECTS = obj/main.o obj/SudokuBoard.o obj/SudokuSolver.o obj/SudokuGame.o obj/SudokuGenerator.o
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(CXX) $(OBJECTS) -o $(TARGET)
 
-# Compile .cpp to .o, and make them depend on your header files
-obj/%.o: src/%.cpp include/SudokuBoard.hpp include/SudokuSolver.hpp include/SudokuGame.hpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+obj/main.o: src/main.cpp include/SudokuGame.hpp
+	$(CXX) $(CXXFLAGS) -c src/main.cpp -o obj/main.o
+
+obj/SudokuBoard.o: src/SudokuBoard.cpp include/SudokuBoard.hpp
+	$(CXX) $(CXXFLAGS) -c src/SudokuBoard.cpp -o obj/SudokuBoard.o
+
+obj/SudokuSolver.o: src/SudokuSolver.cpp include/SudokuSolver.hpp
+	$(CXX) $(CXXFLAGS) -c src/SudokuSolver.cpp -o obj/SudokuSolver.o
+
+obj/SudokuGame.o: src/SudokuGame.cpp include/SudokuGame.hpp
+	$(CXX) $(CXXFLAGS) -c src/SudokuGame.cpp -o obj/SudokuGame.o
+
+obj/SudokuGenerator.o: src/SudokuGenerator.cpp include/SudokuGenerator.hpp
+	$(CXX) $(CXXFLAGS) -c src/SudokuGenerator.cpp -o obj/SudokuGenerator.o
 
 clean:
 	rm -f $(OBJECTS) $(TARGET)
 
 run: $(TARGET)
 	./$(TARGET)
+.PHONY: all clean
